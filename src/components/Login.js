@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 
 const Login = (props) => {
       async function loginButton() {
+            try {
             const body = JSON.stringify({
                   user: {
                         username: props.username,
@@ -31,10 +32,14 @@ const Login = (props) => {
                   alert(json.data.message);
 
             }
+      } catch (error) {
+            console.error(error);
+      }
 
 
 
       }
+
       function logOutButton() {
 
             localStorage.clear('jwt');

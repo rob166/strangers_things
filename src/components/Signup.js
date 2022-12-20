@@ -5,6 +5,7 @@ const Signup = (props) => {
 
 
       async function signupButton() {
+            try {
             const body = JSON.stringify({
                   user: {
                         username: props.username,
@@ -34,7 +35,9 @@ const Signup = (props) => {
                   alert(json.data.message);
 
             }
-
+      } catch (error) {
+            console.error(error);
+      }
 
 
       }

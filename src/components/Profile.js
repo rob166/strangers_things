@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+
 
 
 
 const Profile = (props) => {
-      const jwt = localStorage.getItem('jwt') || 'none';
+      const jwt = props.jwt
       const posts = props.posts;
       const setPosts = props.setPosts;
+      
 
-
+      useEffect(() => {
       async function fetchMeInfo() {
+            try {
             const response = await
                   fetch('https://strangers-things.herokuapp.com/api/2209-ftb-et-web-pt/users/me', {
 
@@ -22,18 +25,26 @@ const Profile = (props) => {
 
             const json = await response.json();
             setPosts(json.data.posts);
-            console.log(json)
+            // console.log(json)
+            // console.log(json.data._id)
+            // localStorage.setItem('authorid', json.data._id);
             if (json.data.username) {
                   props.setMyUserName(json.data.username)
             }
-
+      } catch (error) {
+            console.error(error);
       }
-      useEffect(() => {
-            
-            fetchMeInfo();
-      }, [])
+      }
+      
 
-      async function deletePost(e) {
+
+ 
+
+            
+            fetchMeInfo()
+      }, [jwt, props, setPosts])
+
+     /*  async function deletePost(e) {
             const postid = e.target.getAttribute('postid');
 
 
@@ -57,7 +68,7 @@ const Profile = (props) => {
 
 
 
-      }
+      } */
 
 
 
@@ -75,9 +86,9 @@ const Profile = (props) => {
 
                         <div key={post._id}>
                               <p>
-                                    Author: {post.author.username}  Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} Is Author: {String(post.isAuthor)} AuthorID: {post.author._id}
+                                    Author: {post.author.username}  Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} 
                                    
-                                    <span><button onClick={deletePost} postid={post._id}>Delete</button></span>
+                                    {/* <span><button onClick={deletePost} postid={post._id}>Delete</button></span> */}
 
                               </p>
                         </div>

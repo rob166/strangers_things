@@ -8,6 +8,8 @@ import Home from './components/Home';
 
 function App() {
 
+  const jwt = localStorage.getItem('jwt');
+  const authorId = localStorage.getItem('authorid');
   const [posts, setPosts] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +18,7 @@ function App() {
   const [price, setPrice] = useState('');
   const [willDeliver, setWillDeliver] = useState(false);
   const [myUserName, setMyUserName] = useState('');
-  const [myIsUser, setMyIsUser] = useState(false);
+
 
 
   return (
@@ -31,28 +33,28 @@ function App() {
       
 
         <Route exact path="/">
-          <Home myUserName={myUserName} setMyUserName={setMyUserName} />
+          <Home myUserName={myUserName} setMyUserName={setMyUserName} username={username}/>
         </Route>
 
-        <Route exact path="/profile">
+        <Route forceRefresh={true} exact path="/profile">
           <Profile myUserName={myUserName} setMyUserName={setMyUserName}
-            posts={posts} setPosts={setPosts} />
+            posts={posts} setPosts={setPosts} jwt={jwt}/>
         </Route>
 
-        <Route path="/posts">
+        <Route exact path="/posts">
           <Posts posts={posts} setPosts={setPosts}
             title={title} setTitle={setTitle} description={description}
             setDescription={setDescription} price={price} setPrice={setPrice}
             willDeliver={willDeliver} setWillDeliver={setWillDeliver}
-            myIsUser={myIsUser} setMyIsUser={setMyIsUser} />
+            jwt={jwt} authorId={authorId}/>
         </Route>
 
-        <Route path="/signup">
+        <Route exact path="/signup">
           <Signup password={password} setPassword={setPassword}
             username={username} setUsername={setUsername} />
         </Route>
 
-        <Route path="/login">
+        <Route exact path="/login">
           <Login username={username} setUsername={setUsername}
             password={password} setPassword={setPassword} />
         </Route>

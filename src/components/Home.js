@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Link } from 'react-router-dom';
 
 const Home = (props) => {
 
+const myUserName = props.myUserName;
+
+
 
       
+ 
 
 
   
@@ -13,9 +17,10 @@ const Home = (props) => {
       return (
 
             <div>
+           
                   <h2>Welcome to Stranger's Things!</h2>
 
-                  <h3>Logged in as {props.myUserName}</h3>
+                  <h3>Logged in as {myUserName}</h3>
 
                
                   <Link to="/profile">
