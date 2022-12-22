@@ -1,43 +1,47 @@
-import React, { useState } from 'react'
-
+import React from 'react'
+import { useHistory, Link } from "react-router-dom";
 
 const Signup = (props) => {
-
+      // const history = useHistory();
+      const BASE_URL = props.BASE_URL;
+      const COHORT_NAME = props.COHORT_NAME;
+const setMyUserName=props.setMyUserName
 
       async function signupButton() {
             try {
-            const body = JSON.stringify({
-                  user: {
-                        username: props.username,
-                        password: props.password,
-                  },
-            });
-
-            const response = await
-                  fetch('https://strangers-things.herokuapp.com/api/2209-ftb-et-web-pt/users/register', {
-                        method: "POST",
-                        headers: {
-                              'Content-Type': 'application/json'
+                  const body = JSON.stringify({
+                        user: {
+                              username: props.username,
+                              password: props.password,
                         },
-                        body,
+                  });
+
+                  const response = await
+                        fetch(`${BASE_URL}${COHORT_NAME}/users/register`, {
+                              method: "POST",
+                              headers: {
+                                    'Content-Type': 'application/json'
+                              },
+                              body,
+                        }
+                        );
+
+                  const json = await response.json();
+                  console.log(json)
+
+                  if (json.data === null) {
+                        alert(json.error.message);
+                  } else {
+
+
+                        localStorage.setItem('jwt', json.data.token);
+                        setMyUserName(props.username)
+                        alert(json.data.message);
+
                   }
-                  );
-
-            const json = await response.json();
-            console.log(json)
-
-            if (json.data === null) {
-                  alert(json.error.message);
-            } else {
-
-
-                  localStorage.setItem('jwt', json.data.token);
-                  alert(json.data.message);
-
+            } catch (error) {
+                  console.error(error);
             }
-      } catch (error) {
-            console.error(error);
-      }
 
 
       }
@@ -61,17 +65,22 @@ const Signup = (props) => {
 
                   <div>
                         <h2>Signup</h2>
+                        <div>
+                              <input required placeholder='Username' value={props.username}
+                                    onChange={(e) => props.setUsername(e.target.value)} />
 
-                        <input required placeholder='Username' value={props.username} 
-                              onChange={(e) => props.setUsername(e.target.value)} />
+                              <input required placeholder='Password' type={'password'} value={props.password}
+                                    onChange={(e) => props.setPassword(e.target.value)} />
 
-                        <input required placeholder='Password' value={props.password} 
-                              onChange={(e) => props.setPassword(e.target.value)} />
-
-                        <button onClick={signupButton}>Enter new username and password</button>
-
+                              <button onClick={signupButton}>Enter new username and password</button>
+                        </div>
                         <div>
                               <button onClick={logOutButton} >Log Out</button>
+                        </div>
+                        <div>
+                              <h3>If user already exists, log in:</h3>
+                              {/* <button onClick={() => history.push("/login", { from: "Signup" })}>Log In</button> */}
+                              <Link to="/login"><button>Log In</button></Link>
                         </div>
                   </div>
             </form>

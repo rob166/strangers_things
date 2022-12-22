@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react'
+import { useHistory, Link } from "react-router-dom";
+import Postcard from './Postcard';
 
 const Posts = (props) => {
       const jwt = props.jwt;
-      const authorId = props.authorId;
+      const BASE_URL = props.BASE_URL;
+      const COHORT_NAME = props.COHORT_NAME;
       const posts = props.posts;
       const setPosts = props.setPosts;
       const title = props.title;
@@ -17,26 +20,27 @@ const Posts = (props) => {
 
       useEffect(() => {
             async function fetchPosts() {
+
                   try {
-                  const response = await fetch(
-                        "https://strangers-things.herokuapp.com/api/2209-FTB-ET-WEB-PT/posts", 
-                        {
-                              method: "GET",
-                              headers: {
-                                 
-                                    'Authorization': `Bearer ${jwt}`
-                                
+                        const response = await fetch(
+                              `${BASE_URL}${COHORT_NAME}/posts`,
+                              {
+                                    method: "GET",
+                                    headers: {
+
+                                          'Authorization': `Bearer ${jwt}`
+
+                                    }
                               }
-                        }
-                  )
+                        )
 
-                  const json = await response.json();
-
+                        const json = await response.json();
 
 
-                  setPosts(json.data.posts);
 
-                  console.log(json);
+                        setPosts(json.data.posts);
+
+                        console.log(json);
                   } catch (error) {
                         console.error(error);
                   }
@@ -44,7 +48,7 @@ const Posts = (props) => {
 
 
             fetchPosts();
-      }, []);
+      }, [BASE_URL, COHORT_NAME, jwt, setPosts]);
 
 
       async function deletePost(e) {
@@ -52,7 +56,7 @@ const Posts = (props) => {
 
 
             try {
-                  const resp = await fetch(`https://strangers-things.herokuapp.com/api/2209-ftb-et-web-pt/posts/${postid}`,
+                  const resp = await fetch(`${BASE_URL}${COHORT_NAME}/posts/${postid}`,
                         {
                               method: "DELETE",
                               headers: {
@@ -77,30 +81,30 @@ const Posts = (props) => {
 
 
       async function addPost() {
-            try{
-            const response = await fetch(
-                  `https://strangers-things.herokuapp.com/api/2209-ftb-et-web-pt/posts`,
-                  {
-                        method: "POST",
-                        headers: {
-                              "Content-Type": "application/json",
-                              "Authorization": `Bearer ${jwt}`,
-                        },
-                        body: JSON.stringify({
-                              post: {
-                                    title,
-                                    description,
-                                    price,
-                                    willDeliver,
+            try {
+                  const response = await fetch(
+                        `${BASE_URL}${COHORT_NAME}/posts`,
+                        {
+                              method: "POST",
+                              headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": `Bearer ${jwt}`,
                               },
-                        }),
-                  }
-            );
+                              body: JSON.stringify({
+                                    post: {
+                                          title,
+                                          description,
+                                          price,
+                                          willDeliver,
+                                    },
+                              }),
+                        }
+                  );
 
-            const json = await response.json();
-           
+                  const json = await response.json();
 
-            console.log(json.data.post);
+
+                  console.log(json.data.post);
             } catch (error) {
                   console.error(error);
             }
@@ -145,23 +149,27 @@ const Posts = (props) => {
                         <div>
                               <h1>Posts</h1>
                               {posts.map((post) =>
+                                    <Postcard
+                                          key={post._id}
+                                          post={post}
+                                    />
 
-                                    <div key={post._id}>
-                                          {post.isAuthor === true ?
-                                                <p>
-
-                                                      Author: {post.author.username}  Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} Is Author: {String(post.isAuthor)} 
-
-                                                      <span><button onClick={deletePost} postid={post._id}>Delete</button></span>
-                                                </p>
-                                                :
-                                                <p>
-                                                      Author: {post.author.username}  Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} Is Author: {String(post.isAuthor)} 
-
-
-                                                </p>
-                                          }
-                                    </div>
+                                    /*  <div key={post._id}>
+                                           {post.isAuthor === true ?
+                                                 <p>
+ 
+                                                       Author: {post.author.username}  Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} Is Author: {String(post.isAuthor)}
+                                                       <Link to="/viewmypost"><span><button postid={post._id}>View Post</button></span></Link>
+                                                       <span><button onClick={deletePost} postid={post._id}>Delete</button></span>
+                                                 </p>
+                                                 :
+                                                 <p>
+                                                       Author: {post.author.username}  Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} Is Author: {String(post.isAuthor)}
+ 
+ 
+                                                 </p>
+                                           }
+                                     </div> */
 
                               )}
                         </div>
