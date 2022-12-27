@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { Link } from "react-router-dom";
 
 const Addposts = (props) => {
       const jwt = props.jwt;
       const BASE_URL = props.BASE_URL;
       const COHORT_NAME = props.COHORT_NAME;
-      const posts = props.posts;
-      const setPosts = props.setPosts;
       const title = props.title;
       const setTitle = props.setTitle;
       const description = props.description;
@@ -39,28 +38,26 @@ const Addposts = (props) => {
 
                   const json = await response.json();
 
-
                   console.log(json.data.post);
+
             } catch (error) {
                   console.error(error);
             }
       }
 
-const handleCheckbox = () => {
+      const handleCheckbox = () => {
             setWillDeliver(!willDeliver);
-
       };
 
 
 
       return (
-<form onSubmit={(e) => {
+            <form onSubmit={(e) => {
                   setTitle('');
                   setDescription('');
                   setPrice('');
                   e.preventDefault();
             }}>
-                  <div>
                         <div>
                               <input
                                     placeholder='Enter Title'
@@ -75,14 +72,10 @@ const handleCheckbox = () => {
                                     <input type="checkbox" checked={willDeliver} onChange={handleCheckbox} />
                                     Will Deliver?
                               </label>
-                              <button onClick={addPost}>Add Post</button>
+                              <Link to="/posts"><button onClick={addPost}>Create</button></Link>
                         </div>
-                  </div>
-</form>
-
-
+            </form>
       );
-
 }
 
-// export default Addposts;
+export default Addposts;

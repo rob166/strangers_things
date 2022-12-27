@@ -2,10 +2,10 @@ import React from 'react'
 import { useHistory, Link } from "react-router-dom";
 
 const Login = (props) => {
-      // const history = useHistory();
+      const history = useHistory();
       const BASE_URL = props.BASE_URL;
       const COHORT_NAME = props.COHORT_NAME;
-      const setMyUserName=props.setMyUserName
+      const setMyUserName = props.setMyUserName
 
       async function loginButton() {
             try {
@@ -14,7 +14,8 @@ const Login = (props) => {
                               username: props.username,
                               password: props.password,
                         },
-                  });
+                  }
+                  );
                   const response = await
                         fetch(`${BASE_URL}${COHORT_NAME}/users/login`, {
                               method: "POST",
@@ -26,40 +27,27 @@ const Login = (props) => {
                         );
 
                   const json = await response.json();
+
                   console.log(json)
 
                   if (json.data === null) {
-
                         alert(json.error.message);
                   } else {
-
-
                         localStorage.setItem('jwt', json.data.token);
                         setMyUserName(props.username)
 
                         alert(json.data.message);
-
-
+                        history.push("/profile")
                   }
             } catch (error) {
                   console.error(error);
             }
-
-
-
       }
 
       function logOutButton() {
-
             localStorage.clear('jwt');
-           
             alert('Logged out');
-
-
-
       }
-
-
 
       return (
             <form onSubmit={(e) => {
@@ -83,14 +71,12 @@ const Login = (props) => {
                         </div>
                         <div>
                               <h3>If user not found, create one:</h3>
-                              
+
                               <Link to="/signup"><button>Sign Up</button></Link>
 
                         </div>
                   </div>
-
             </form>
-
       );
 }
 

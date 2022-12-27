@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react';
 
-
-
-
 const Profile = (props) => {
       const jwt = props.jwt
       const BASE_URL = props.BASE_URL;
@@ -22,17 +19,15 @@ const Profile = (props) => {
                                           'Content-Type': 'application/json',
                                           'Authorization': `Bearer ${jwt}`,
                                     },
-
                               }
                               );
 
                         const json = await response.json();
-                        setPosts(json.data.posts);
-                        // console.log(json)
 
-                        // if (json.data.username) {
+                        setPosts(json.data.posts);
+
                         setMyUserName(json.data.username);
-                        // }
+
                   } catch (error) {
                         console.error(error);
                   }
@@ -66,41 +61,25 @@ const Profile = (props) => {
  
        } */
 
-
-
-
-
-
-
       return (
             <div>
                   <h2>Profile</h2>
-               
                   <h3>Username: {myUserName}</h3>
                   <h3>My Posts:</h3>
                   {posts.map((post) =>
-
                         <div key={post._id}>
                               {jwt ?
                                     <p>
-                                          Author: {post.author.username}  Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} Messages: {post.messages}
-
+                                          Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} Messages: {post.messages}
                                           {/* <span><button onClick={deletePost} postid={post._id}>Delete</button></span> */}
-
                                     </p>
                                     : null}
                         </div>
-                  )}
+                  )
+                  }
             </div>
-
-
       )
-
-
-
-
-
-
 }
+
 
 export default Profile;

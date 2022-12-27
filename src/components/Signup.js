@@ -2,10 +2,10 @@ import React from 'react'
 import { useHistory, Link } from "react-router-dom";
 
 const Signup = (props) => {
-      // const history = useHistory();
+      const history = useHistory();
       const BASE_URL = props.BASE_URL;
       const COHORT_NAME = props.COHORT_NAME;
-const setMyUserName=props.setMyUserName
+      const setMyUserName = props.setMyUserName
 
       async function signupButton() {
             try {
@@ -14,7 +14,8 @@ const setMyUserName=props.setMyUserName
                               username: props.username,
                               password: props.password,
                         },
-                  });
+                  }
+                  );
 
                   const response = await
                         fetch(`${BASE_URL}${COHORT_NAME}/users/register`, {
@@ -27,42 +28,37 @@ const setMyUserName=props.setMyUserName
                         );
 
                   const json = await response.json();
+
                   console.log(json)
 
                   if (json.data === null) {
                         alert(json.error.message);
                   } else {
-
-
                         localStorage.setItem('jwt', json.data.token);
                         setMyUserName(props.username)
                         alert(json.data.message);
-
+                        history.push("/profile")
                   }
             } catch (error) {
                   console.error(error);
             }
-
-
       }
+
       function logOutButton() {
             localStorage.getItem('jwt')
             if ('jwt') {
                   localStorage.clear('jwt');
                   alert('Logged out');
             }
-
       }
-
-
 
       return (
             <form onSubmit={(e) => {
                   props.setUsername('');
                   props.setPassword('');
                   e.preventDefault();
-            }}>
-
+            }
+            }>
                   <div>
                         <h2>Signup</h2>
                         <div>
@@ -84,10 +80,9 @@ const setMyUserName=props.setMyUserName
                         </div>
                   </div>
             </form>
-
-
       );
 }
+
 
 export default Signup;
 
