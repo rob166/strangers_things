@@ -48,6 +48,7 @@ const Signup = (props) => {
             localStorage.getItem('jwt')
             if ('jwt') {
                   localStorage.clear('jwt');
+                  window.location.reload(false);
                   alert('Logged out');
             }
       }
@@ -76,7 +77,7 @@ const Signup = (props) => {
                         <div>
                               <h3>If user already exists, log in:</h3>
                               {/* <button onClick={() => history.push("/login", { from: "Signup" })}>Log In</button> */}
-                              <Link to="/login"><button>Log In</button></Link>
+                              <Link to="/"><button>Log In</button></Link>
                         </div>
                   </div>
             </form>

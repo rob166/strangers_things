@@ -8,6 +8,8 @@ const Profile = (props) => {
       const setPosts = props.setPosts;
       const setMyUserName = props.setMyUserName;
       const myUserName = props.myUserName;
+      const messages = props.messages;
+      const setMessages = props.setMessages;
 
       useEffect(() => {
             async function fetchMeInfo() {
@@ -25,61 +27,61 @@ const Profile = (props) => {
                         const json = await response.json();
 
                         setPosts(json.data.posts);
-
+                        setMessages(json.data.messages);
                         setMyUserName(json.data.username);
+                        console.log(json);
 
                   } catch (error) {
                         console.error(error);
                   }
             }
             fetchMeInfo()
-      }, [BASE_URL, COHORT_NAME, jwt, props, setMyUserName, setPosts])
+      }, [BASE_URL, COHORT_NAME, jwt, setMessages, setMyUserName, setPosts])
 
-      /*  async function deletePost(e) {
-             const postid = e.target.getAttribute('postid');
- 
- 
-             try {
-                   const resp = await fetch(`https://strangers-things.herokuapp.com/api/2209-ftb-et-web-pt/posts/${postid}`,
-                         {
-                               method: "DELETE",
-                               headers: {
-                                     'Content-Type': 'application/json',
-                                     'Authorization': `Bearer ${jwt}`
-                               },
-                         }
-                   );
-                   const json = await resp.json();
- 
-                   setPosts(json.data.posts);
- 
-             } catch (error) {
-                   console.error(error);
-             }
- 
- 
- 
-       } */
+
 
       return (
             <div>
                   <h2>Profile</h2>
-                  <h3>Username: {myUserName}</h3>
-                  <h3>My Posts:</h3>
-                  {posts.map((post) =>
+                  <h3>My Username: {myUserName}</h3>
+                  <h3>My Posts</h3>
+
+                  {posts.map((post) => (
+
                         <div key={post._id}>
-                              {jwt ?
+
+                              {jwt &&
+
                                     <p>
-                                          Title: {post.title}  Description: {post.description} Price: {post.price} Will Deliver: {String(post.willDeliver)} Messages: {post.messages}
-                                          {/* <span><button onClick={deletePost} postid={post._id}>Delete</button></span> */}
+                                          Title: {post.title}  Description: {post.description} Price: {post.price} Location: {post.location} Will Deliver: {String(post.willDeliver)} Post Status: {post.active ? 'Active' : 'Deleted'}
+
+
+
+
                                     </p>
-                                    : null}
+                              }
                         </div>
                   )
+                  )}
+                  <h3>My Messages</h3>
+                  <h4>Messages to me:</h4>
+
+                  {messages.map((message, index) =>
+                        <div key={index}>
+                              <p>
+                                    Message to me from {message.fromUser.username} about my post titled "{message.post.title}": {message.content}
+                              </p>
+                        </div>
+
+                  )
                   }
+
+
             </div>
       )
 }
 
 
 export default Profile;
+
+

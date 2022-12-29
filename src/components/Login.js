@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory, Link } from "react-router-dom";
 
 const Login = (props) => {
@@ -7,46 +7,50 @@ const Login = (props) => {
       const COHORT_NAME = props.COHORT_NAME;
       const setMyUserName = props.setMyUserName
 
-      async function loginButton() {
-            try {
-                  const body = JSON.stringify({
-                        user: {
-                              username: props.username,
-                              password: props.password,
-                        },
-                  }
-                  );
-                  const response = await
-                        fetch(`${BASE_URL}${COHORT_NAME}/users/login`, {
-                              method: "POST",
-                              headers: {
-                                    'Content-Type': 'application/json'
+    
+            async function loginButton() {
+                  try {
+                        const body = JSON.stringify({
+                              user: {
+                                    username: props.username,
+                                    password: props.password,
                               },
-                              body,
                         }
                         );
+                        const response = await
+                              fetch(`${BASE_URL}${COHORT_NAME}/users/login`, {
+                                    method: "POST",
+                                    headers: {
+                                          'Content-Type': 'application/json'
+                                    },
+                                    body,
+                              }
+                              );
 
-                  const json = await response.json();
+                        const json = await response.json();
 
-                  console.log(json)
+                        console.log(json)
 
-                  if (json.data === null) {
-                        alert(json.error.message);
-                  } else {
-                        localStorage.setItem('jwt', json.data.token);
-                        setMyUserName(props.username)
+                        if (json.data === null) {
+                              alert(json.error.message);
+                        } else {
+                              localStorage.setItem('jwt', json.data.token);
+                              setMyUserName(props.username)
 
-                        alert(json.data.message);
-                        history.push("/profile")
+                              alert(json.data.message);
+                              history.push("/profile")
+                        }
+                  } catch (error) {
+                        console.error(error);
                   }
-            } catch (error) {
-                  console.error(error);
             }
-      }
+           
+     
 
       function logOutButton() {
             localStorage.clear('jwt');
             alert('Logged out');
+            window.location.reload(false);
       }
 
       return (

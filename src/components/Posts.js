@@ -36,80 +36,12 @@ const Posts = (props) => {
             fetchPosts();
       }, [BASE_URL, COHORT_NAME, jwt, setPosts]);
 
-
-      /* async function deletePost(e) {
-            const postid = e.target.getAttribute('postid');
-
-
-            try {
-                  const resp = await fetch(`${BASE_URL}${COHORT_NAME}/posts/${postid}`,
-                        {
-                              method: "DELETE",
-                              headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${jwt}`
-                              },
-                        }
-                  );
-                  const json = await resp.json();
-
-                  setPosts(json.data.posts);
-
-            } catch (error) {
-                  console.error(error);
-            }
-
-
-
-      } */
-
-
-
-
-      /* async function addPost() {
-            try {
-                  const response = await fetch(
-                        `${BASE_URL}${COHORT_NAME}/posts`,
-                        {
-                              method: "POST",
-                              headers: {
-                                    "Content-Type": "application/json",
-                                    "Authorization": `Bearer ${jwt}`,
-                              },
-                              body: JSON.stringify({
-                                    post: {
-                                          title,
-                                          description,
-                                          price,
-                                          willDeliver,
-                                    },
-                              }),
-                        }
-                  );
-
-                  const json = await response.json();
-
-
-                  console.log(json.data.post);
-            } catch (error) {
-                  console.error(error);
-            }
-      }
-
-
-
-
-      const handleCheckbox = () => {
-            setWillDeliver(!willDeliver);
-
-      }; */
-
-
-
       return (
 
             <div>
-                  <Link to="/addpost"><button>Add Post</button></Link>
+                  {jwt
+                  ? <Link to="/addpost"><button>Add Post</button></Link>
+                  : null}
 
                   <h1>Posts</h1>
                   {posts.map((post) =>
@@ -135,7 +67,9 @@ const Posts = (props) => {
                                                 key={post._id}
                                                 post={post}
                                           />
-                                          <span><button postid={post._id}>Send Message</button></span>
+                                          {jwt
+                                          ?<span><button postid={post._id}>Send Message</button></span>
+                                          : null}
                                     </>
                               }
                         </div>

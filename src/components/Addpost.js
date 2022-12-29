@@ -11,6 +11,8 @@ const Addposts = (props) => {
       const setDescription = props.setDescription;
       const price = props.price;
       const setPrice = props.setPrice;
+      const location = props.location;
+      const setLocation = props.setLocation;
       const willDeliver = props.willDeliver;
       const setWillDeliver = props.setWillDeliver;
 
@@ -30,6 +32,7 @@ const Addposts = (props) => {
                                           title,
                                           description,
                                           price,
+                                          location,
                                           willDeliver,
                                     },
                               }),
@@ -56,6 +59,7 @@ const Addposts = (props) => {
                   setTitle('');
                   setDescription('');
                   setPrice('');
+                  setLocation('');
                   e.preventDefault();
             }}>
                         <div>
@@ -68,6 +72,9 @@ const Addposts = (props) => {
                               <input
                                     placeholder='Enter Price'
                                     onChange={(e) => setPrice(e.target.value)} />
+                               <input
+                                    placeholder='Enter Location'
+                                    onChange={(e) => setLocation(e.target.value)} />     
                               <label>
                                     <input type="checkbox" checked={willDeliver} onChange={handleCheckbox} />
                                     Will Deliver?

@@ -19,33 +19,42 @@ function App() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [location, setLocation] = useState('');
   const [willDeliver, setWillDeliver] = useState(false);
   const [myUserName, setMyUserName] = useState('');
+  const [messages, setMessages] = useState([]);
+ 
 
   return (
     <Router >
       <header>
-        <Link to="/"> Home </Link>
-        <Link to="/posts"> Posts </Link>
-        <Link to="/profile"> Profile  </Link>
+        <Link to="/"> Login </Link>
         <Link to="/signup"> Signup </Link>
-        <Link to="/login"> Login </Link>
+        <Link to="/posts"> Posts </Link>
+        {jwt &&
+          <>
+            <Link to="/profile"> Profile  </Link>
+            <Link to="/home"> Home </Link>
+          </>
+        }
       </header>
 
       <Switch>
-        <Route exact path={"/"}>
+        <Route exact path={"/home"}>
           <Home myUserName={myUserName} setMyUserName={setMyUserName} />
         </Route>
 
         <Route exact path={"/profile"}>
           <Profile myUserName={myUserName} setMyUserName={setMyUserName}
-            posts={posts} setPosts={setPosts} jwt={jwt} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
+            posts={posts} setPosts={setPosts} jwt={jwt} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME}
+            messages={messages} setMessages={setMessages} />
         </Route>
 
         <Route exact path={"/posts"}>
           <Posts posts={posts} setPosts={setPosts}
             title={title} setTitle={setTitle} description={description}
             setDescription={setDescription} price={price} setPrice={setPrice}
+            location={location} setLocation={setLocation}
             willDeliver={willDeliver} setWillDeliver={setWillDeliver}
             jwt={jwt} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
         </Route>
@@ -56,7 +65,7 @@ function App() {
             myUserName={myUserName} setMyUserName={setMyUserName} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
         </Route>
 
-        <Route exact path={"/login"}>
+        <Route exact path={"/"}>
           <Login username={username} setUsername={setUsername}
             password={password} setPassword={setPassword} myUserName={myUserName}
             setMyUserName={setMyUserName} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
@@ -66,6 +75,7 @@ function App() {
           <Addpost posts={posts} setPosts={setPosts}
             title={title} setTitle={setTitle} description={description}
             setDescription={setDescription} price={price} setPrice={setPrice}
+            location={location} setLocation={setLocation}
             willDeliver={willDeliver} setWillDeliver={setWillDeliver}
             jwt={jwt} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
         </Route>
@@ -86,6 +96,7 @@ function App() {
                   posts={posts} setPosts={setPosts}
                   title={title} setTitle={setTitle} description={description}
                   setDescription={setDescription} price={price} setPrice={setPrice}
+                  location={location} setLocation={setLocation}
                   willDeliver={willDeliver} setWillDeliver={setWillDeliver}
                 />
               );

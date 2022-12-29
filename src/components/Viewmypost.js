@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import Postcard from './Postcard';
 
 const Viewmypost = (props) => {
@@ -8,6 +9,7 @@ const Viewmypost = (props) => {
       const postId = props.postId;
       const posts = props.posts;
       const setPosts = props.setPosts;
+   
 
       useEffect(() => {
             async function fetchPosts() {
@@ -38,7 +40,7 @@ const Viewmypost = (props) => {
 
       }, [BASE_URL, COHORT_NAME, jwt, setPosts]);
 
-      /* async function deletePost(e) {
+      async function deletePost(e) {
             const postid = e.target.getAttribute('postid');
             try {
                   const resp = await fetch(`${BASE_URL}${COHORT_NAME}/posts/${postid}`,
@@ -57,7 +59,13 @@ const Viewmypost = (props) => {
             } catch (error) {
                   console.error(error);
             }
-      } */
+      }
+
+      
+      
+
+
+
 
       return (
             <div>
@@ -71,8 +79,9 @@ const Viewmypost = (props) => {
                                                 post={post}
 
                                           />
-
+                                          <Link to="/posts"><span><button onClick={deletePost} postid={post._id}>Delete</button></span></Link>
                                     </div>
+
                               }
                         </div>
                   )}
