@@ -10,7 +10,7 @@ const Profile = (props) => {
       const myUserName = props.myUserName;
       const messages = props.messages;
       const setMessages = props.setMessages;
-
+     
       useEffect(() => {
             async function fetchMeInfo() {
                   try {
@@ -36,6 +36,7 @@ const Profile = (props) => {
                   }
             }
             fetchMeInfo()
+
       }, [BASE_URL, COHORT_NAME, jwt, setMessages, setMyUserName, setPosts])
 
 
@@ -47,40 +48,42 @@ const Profile = (props) => {
                   <h3>My Posts</h3>
 
                   {posts.map((post) => (
-
                         <div key={post._id}>
-
                               {jwt &&
-
                                     <p>
                                           Title: {post.title}  Description: {post.description} Price: {post.price} Location: {post.location} Will Deliver: {String(post.willDeliver)} Post Status: {post.active ? 'Active' : 'Deleted'}
-
-
-
-
                                     </p>
                               }
                         </div>
                   )
                   )}
+
                   <h3>My Messages</h3>
                   <h4>Messages to me:</h4>
-
                   {messages.map((message, index) =>
                         <div key={index}>
-                              <p>
-                                    Message to me from {message.fromUser.username} about my post titled "{message.post.title}": {message.content}
-                              </p>
+                              {message.fromUser.username !== myUserName &&
+                                    <p>
+                                          Message to me from {message.fromUser.username} about my post titled "{message.post.title}": {message.content}
+                                    </p>
+                              }
                         </div>
+                  )}
 
-                  )
-                  }
-
+                  <h4>Messages from me:</h4>
+                  {messages.map((message, index) =>
+                        <div key={index}>
+                              {message.fromUser.username === myUserName &&
+                                    <p>
+                                          Message from me about the post titled "{message.post.title}": {message.content}
+                                    </p>
+                              }
+                        </div>
+                  )}
 
             </div>
       )
 }
-
 
 export default Profile;
 

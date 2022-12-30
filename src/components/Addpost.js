@@ -16,7 +16,6 @@ const Addposts = (props) => {
       const willDeliver = props.willDeliver;
       const setWillDeliver = props.setWillDeliver;
 
-
       async function addPost() {
             try {
                   const response = await fetch(
@@ -40,7 +39,6 @@ const Addposts = (props) => {
                   );
 
                   const json = await response.json();
-
                   console.log(json.data.post);
 
             } catch (error) {
@@ -51,8 +49,6 @@ const Addposts = (props) => {
       const handleCheckbox = () => {
             setWillDeliver(!willDeliver);
       };
-
-
 
       return (
             <form onSubmit={(e) => {

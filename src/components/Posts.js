@@ -24,9 +24,7 @@ const Posts = (props) => {
                         )
 
                         const json = await response.json();
-
                         setPosts(json.data.posts);
-
                         console.log(json);
 
                   } catch (error) {
@@ -37,7 +35,6 @@ const Posts = (props) => {
       }, [BASE_URL, COHORT_NAME, jwt, setPosts]);
 
       return (
-
             <div>
                   {jwt
                   ? <Link to="/addpost"><button>Add Post</button></Link>
@@ -68,7 +65,10 @@ const Posts = (props) => {
                                                 post={post}
                                           />
                                           {jwt
-                                          ?<span><button postid={post._id}>Send Message</button></span>
+                                          ?<span><button onClick={() => {
+                                                history.push(`/message/${post._id}`);
+                                          }
+                                          }>Send Message</button></span>
                                           : null}
                                     </>
                               }
@@ -78,6 +78,5 @@ const Posts = (props) => {
             </div>
       );
 }
-
 
 export default Posts;

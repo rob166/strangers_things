@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useHistory, Link } from "react-router-dom";
 
 const Login = (props) => {
@@ -7,7 +7,6 @@ const Login = (props) => {
       const COHORT_NAME = props.COHORT_NAME;
       const setMyUserName = props.setMyUserName
 
-    
             async function loginButton() {
                   try {
                         const body = JSON.stringify({
@@ -32,21 +31,22 @@ const Login = (props) => {
                         console.log(json)
 
                         if (json.data === null) {
+
                               alert(json.error.message);
+
                         } else {
+
                               localStorage.setItem('jwt', json.data.token);
                               setMyUserName(props.username)
-
                               alert(json.data.message);
                               history.push("/profile")
+
                         }
                   } catch (error) {
                         console.error(error);
                   }
             }
            
-     
-
       function logOutButton() {
             localStorage.clear('jwt');
             alert('Logged out');
@@ -75,9 +75,7 @@ const Login = (props) => {
                         </div>
                         <div>
                               <h3>If user not found, create one:</h3>
-
                               <Link to="/signup"><button>Sign Up</button></Link>
-
                         </div>
                   </div>
             </form>

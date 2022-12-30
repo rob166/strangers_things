@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import Home from './components/Home';
 import Addpost from './components/Addpost';
 import Viewmypost from './components/Viewmypost';
+import Message from './components/Message';
 
 function App() {
   const BASE_URL = 'https://strangers-things.herokuapp.com/api/';
@@ -23,14 +24,15 @@ function App() {
   const [willDeliver, setWillDeliver] = useState(false);
   const [myUserName, setMyUserName] = useState('');
   const [messages, setMessages] = useState([]);
- 
+  const [myMessages, setMyMessages] = useState([]);
 
   return (
     <Router >
       <header>
-        <Link to="/"> Login </Link>
-        <Link to="/signup"> Signup </Link>
+        <Link to="/"> Login/Logout </Link>
+        <Link to="/signup"> Signup/Logout </Link>
         <Link to="/posts"> Posts </Link>
+
         {jwt &&
           <>
             <Link to="/profile"> Profile  </Link>
@@ -41,43 +43,79 @@ function App() {
 
       <Switch>
         <Route exact path={"/home"}>
-          <Home myUserName={myUserName} setMyUserName={setMyUserName} />
+          <Home
+            myUserName={myUserName}
+            setMyUserName={setMyUserName} />
         </Route>
 
         <Route exact path={"/profile"}>
-          <Profile myUserName={myUserName} setMyUserName={setMyUserName}
-            posts={posts} setPosts={setPosts} jwt={jwt} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME}
-            messages={messages} setMessages={setMessages} />
+          <Profile
+            myUserName={myUserName}
+            setMyUserName={setMyUserName}
+            posts={posts}
+            setPosts={setPosts}
+            jwt={jwt}
+            BASE_URL={BASE_URL}
+            COHORT_NAME={COHORT_NAME}
+            messages={messages}
+            setMessages={setMessages} />
         </Route>
 
         <Route exact path={"/posts"}>
-          <Posts posts={posts} setPosts={setPosts}
-            title={title} setTitle={setTitle} description={description}
-            setDescription={setDescription} price={price} setPrice={setPrice}
-            location={location} setLocation={setLocation}
-            willDeliver={willDeliver} setWillDeliver={setWillDeliver}
-            jwt={jwt} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
+          <Posts
+            posts={posts}
+            setPosts={setPosts}
+            title={title}
+            setTitle={setTitle}
+            description={description}
+            setDescription={setDescription}
+            price={price}
+            setPrice={setPrice}
+            location={location}
+            setLocation={setLocation}
+            willDeliver={willDeliver}
+            setWillDeliver={setWillDeliver}
+            jwt={jwt}
+            BASE_URL={BASE_URL}
+            COHORT_NAME={COHORT_NAME} />
         </Route>
 
         <Route exact path={"/signup"}>
-          <Signup password={password} setPassword={setPassword}
-            username={username} setUsername={setUsername}
-            myUserName={myUserName} setMyUserName={setMyUserName} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
+          <Signup
+            password={password}
+            setPassword={setPassword}
+            username={username}
+            setUsername={setUsername}
+            myUserName={myUserName}
+            setMyUserName={setMyUserName}
+            BASE_URL={BASE_URL}
+            COHORT_NAME={COHORT_NAME} />
         </Route>
 
         <Route exact path={"/"}>
-          <Login username={username} setUsername={setUsername}
+          <Login
+            username={username} setUsername={setUsername}
             password={password} setPassword={setPassword} myUserName={myUserName}
             setMyUserName={setMyUserName} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
         </Route>
 
         <Route exact path={"/addpost"}>
-          <Addpost posts={posts} setPosts={setPosts}
-            title={title} setTitle={setTitle} description={description}
-            setDescription={setDescription} price={price} setPrice={setPrice}
-            location={location} setLocation={setLocation}
-            willDeliver={willDeliver} setWillDeliver={setWillDeliver}
-            jwt={jwt} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME} />
+          <Addpost
+            posts={posts}
+            setPosts={setPosts}
+            title={title}
+            setTitle={setTitle}
+            description={description}
+            setDescription={setDescription}
+            price={price}
+            setPrice={setPrice}
+            location={location}
+            setLocation={setLocation}
+            willDeliver={willDeliver}
+            setWillDeliver={setWillDeliver}
+            jwt={jwt}
+            BASE_URL={BASE_URL}
+            COHORT_NAME={COHORT_NAME} />
         </Route>
 
         <Route exact path={"/posts/:postId"}
@@ -92,12 +130,36 @@ function App() {
               } = routeProps;
               return (
                 <Viewmypost
-                  postId={postId} jwt={jwt} BASE_URL={BASE_URL} COHORT_NAME={COHORT_NAME}
-                  posts={posts} setPosts={setPosts}
-                  title={title} setTitle={setTitle} description={description}
-                  setDescription={setDescription} price={price} setPrice={setPrice}
-                  location={location} setLocation={setLocation}
-                  willDeliver={willDeliver} setWillDeliver={setWillDeliver}
+                  postId={postId}
+                  jwt={jwt}
+                  BASE_URL={BASE_URL}
+                  COHORT_NAME={COHORT_NAME}
+                  posts={posts}
+                  setPosts={setPosts}
+                />
+              );
+            }
+          }
+        />
+
+        <Route exact path={"/message/:postId"}
+          render={
+            (routeProps) => {
+              const {
+                match: {
+                  params: {
+                    postId,
+                  },
+                },
+              } = routeProps;
+              return (
+                <Message
+                  postId={postId}
+                  jwt={jwt}
+                  BASE_URL={BASE_URL}
+                  COHORT_NAME={COHORT_NAME}
+                  myMessages={myMessages}
+                  setMyMessages={setMyMessages}
                 />
               );
             }
@@ -107,6 +169,5 @@ function App() {
     </Router >
   );
 }
-
 
 export default App;

@@ -6,7 +6,7 @@ const Postcard = (props) => {
       return (
             <div>
 
-                  Title: {post.title} Author: {post.author.username} Description: {post.description} Price: {post.price} Location: {post.location} Will Deliver: {String(post.willDeliver)} {/* Is Author: {String(post.isAuthor)} */}
+                  Title: {post.title} Author: {post.author.username} Description: {post.description} Price: {post.price} Location: {post.location} Will Deliver: {String(post.willDeliver)} 
 
             </div>
       );

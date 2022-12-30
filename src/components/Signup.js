@@ -16,7 +16,6 @@ const Signup = (props) => {
                         },
                   }
                   );
-
                   const response = await
                         fetch(`${BASE_URL}${COHORT_NAME}/users/register`, {
                               method: "POST",
@@ -28,16 +27,19 @@ const Signup = (props) => {
                         );
 
                   const json = await response.json();
-
                   console.log(json)
 
                   if (json.data === null) {
+
                         alert(json.error.message);
+
                   } else {
+
                         localStorage.setItem('jwt', json.data.token);
                         setMyUserName(props.username)
                         alert(json.data.message);
                         history.push("/profile")
+
                   }
             } catch (error) {
                   console.error(error);
@@ -76,14 +78,12 @@ const Signup = (props) => {
                         </div>
                         <div>
                               <h3>If user already exists, log in:</h3>
-                              {/* <button onClick={() => history.push("/login", { from: "Signup" })}>Log In</button> */}
                               <Link to="/"><button>Log In</button></Link>
                         </div>
                   </div>
             </form>
       );
 }
-
 
 export default Signup;
 

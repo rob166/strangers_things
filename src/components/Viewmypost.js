@@ -10,7 +10,6 @@ const Viewmypost = (props) => {
       const posts = props.posts;
       const setPosts = props.setPosts;
    
-
       useEffect(() => {
             async function fetchPosts() {
                   try {
@@ -26,9 +25,7 @@ const Viewmypost = (props) => {
                         )
 
                         const json = await response.json();
-
                         setPosts(json.data.posts);
-
                         console.log(json);
 
                   } catch (error) {
@@ -52,8 +49,8 @@ const Viewmypost = (props) => {
                               },
                         }
                   );
-                  const json = await resp.json();
 
+                  const json = await resp.json();
                   setPosts(json.data.posts);
 
             } catch (error) {
@@ -61,27 +58,18 @@ const Viewmypost = (props) => {
             }
       }
 
-      
-      
-
-
-
-
       return (
             <div>
                   {posts.map((post) =>
-
                         <div key={post._id}>
                               {post._id === postId &&
                                     <div>
                                           <Postcard
                                                 key={post._id}
                                                 post={post}
-
                                           />
                                           <Link to="/posts"><span><button onClick={deletePost} postid={post._id}>Delete</button></span></Link>
                                     </div>
-
                               }
                         </div>
                   )}
