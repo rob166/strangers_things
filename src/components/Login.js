@@ -1,5 +1,7 @@
 import React from 'react'
 import { useHistory, Link } from "react-router-dom";
+import buttonStyles from './button.module.css';
+import styles from './Login.module.css';
 
 const Login = (props) => {
       const history = useHistory();
@@ -7,46 +9,46 @@ const Login = (props) => {
       const COHORT_NAME = props.COHORT_NAME;
       const setMyUserName = props.setMyUserName
 
-            async function loginButton() {
-                  try {
-                        const body = JSON.stringify({
-                              user: {
-                                    username: props.username,
-                                    password: props.password,
+      async function loginButton() {
+            try {
+                  const body = JSON.stringify({
+                        user: {
+                              username: props.username,
+                              password: props.password,
+                        },
+                  }
+                  );
+                  const response = await
+                        fetch(`${BASE_URL}${COHORT_NAME}/users/login`, {
+                              method: "POST",
+                              headers: {
+                                    'Content-Type': 'application/json'
                               },
+                              body,
                         }
                         );
-                        const response = await
-                              fetch(`${BASE_URL}${COHORT_NAME}/users/login`, {
-                                    method: "POST",
-                                    headers: {
-                                          'Content-Type': 'application/json'
-                                    },
-                                    body,
-                              }
-                              );
 
-                        const json = await response.json();
+                  const json = await response.json();
 
-                        console.log(json)
+                  console.log(json)
 
-                        if (json.data === null) {
+                  if (json.data === null) {
 
-                              alert(json.error.message);
+                        alert(json.error.message);
 
-                        } else {
+                  } else {
 
-                              localStorage.setItem('jwt', json.data.token);
-                              setMyUserName(props.username)
-                              alert(json.data.message);
-                              history.push("/profile")
+                        localStorage.setItem('jwt', json.data.token);
+                        setMyUserName(props.username)
+                        alert(json.data.message);
+                        history.push("/profile")
 
-                        }
-                  } catch (error) {
-                        console.error(error);
                   }
+            } catch (error) {
+                  console.error(error);
             }
-           
+      }
+
       function logOutButton() {
             localStorage.clear('jwt');
             alert('Logged out');
@@ -54,29 +56,32 @@ const Login = (props) => {
       }
 
       return (
-            <form onSubmit={(e) => {
+            <form className={styles.container} onSubmit={(e) => {
                   props.setUsername('');
                   props.setPassword('');
                   e.preventDefault();
             }}>
-                  <div>
-                        <h2>Login</h2>
-                        <div>
-                              <input required="required" placeholder='Username' value={props.username}
-                                    onChange={(e) => props.setUsername(e.target.value)} />
+                  <div className={styles.input_all}>
+                        <h2>Login/Logout</h2>
 
-                              <input required="required" placeholder='Password' type={'password'} value={props.password}
-                                    onChange={(e) => props.setPassword(e.target.value)} />
 
-                              <button onClick={loginButton}>Enter username and password</button>
+                        <input className={styles.input} required="required" placeholder='Username' value={props.username}
+                              onChange={(e) => props.setUsername(e.target.value)} />
+
+                        <input className={styles.input} required="required" placeholder='Password' type={'password'} value={props.password}
+                              onChange={(e) => props.setPassword(e.target.value)} />
+
+
+                        <button className={buttonStyles.button} onClick={loginButton}>Enter username and password</button>
+
+                        <div className={styles.logout_button}>
+                              <button className={buttonStyles.button} onClick={logOutButton}>Log Out</button>
                         </div>
-                        <div>
-                              <button onClick={logOutButton}>Log Out</button>
-                        </div>
-                        <div>
-                              <h3>If user not found, create one:</h3>
-                              <Link to="/signup"><button>Sign Up</button></Link>
-                        </div>
+
+
+                        <h3>If user not found, create one:</h3>
+                        <Link to="/signup"><button className={buttonStyles.button}>Sign Up</button></Link>
+
                   </div>
             </form>
       );

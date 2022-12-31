@@ -1,16 +1,18 @@
 import { React } from 'react'
 import { Link } from 'react-router-dom';
+import styles from './Home.module.css';
+import buttonStyles from './button.module.css';
 
 const Home = (props) => {
       const myUserName = props.myUserName;
 
       return (
-            <div>
-                  <h2>Welcome to Stranger's Things!</h2>
-                  <h3>Logged in as {myUserName}</h3>
+            <div className={styles.container}>
+                  <h1>Welcome to Stranger's Things!</h1>
+                  <h2>Logged in as {myUserName}</h2>
 
                   <Link to="/profile">
-                        <button>View Profile</button>
+                        <button className={buttonStyles.button}>View Profile</button>
                   </Link>
             </div>
       );

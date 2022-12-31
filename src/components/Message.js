@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import styles from './Message.module.css';
+import buttonStyles from './button.module.css';
 
 const Message = (props) => {
       const jwt = props.jwt;
@@ -37,15 +39,15 @@ const Message = (props) => {
       };
 
       return (
-            <form onSubmit={(e) => {
+            <form className={styles.container} onSubmit={(e) => {
                   setMyMessages('');
                   e.preventDefault();
             }}>
-                  <div>
-                        <input
+                  <div className={styles.container}>
+                        <input className={styles.input}
                               placeholder='Enter Message'
                               onChange={(e) => setMyMessages(e.target.value)} />
-                        <Link to="/posts"><span><button onClick={sendMessage}>Send Message</button></span></Link>
+                        <Link to="/posts"><span><button className={buttonStyles.button} onClick={sendMessage}>Send Message</button></span></Link>
                   </div >
             </form>
       );

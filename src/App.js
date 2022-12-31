@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Addpost from './components/Addpost';
 import Viewmypost from './components/Viewmypost';
 import Message from './components/Message';
+import styles from './App.module.css';
 
 function App() {
   const BASE_URL = 'https://strangers-things.herokuapp.com/api/';
@@ -27,10 +28,11 @@ function App() {
   const [myMessages, setMyMessages] = useState([]);
 
   return (
+    <div className={styles.container}>
     <Router >
-      <header>
+      <header className={styles.top}>
         <Link to="/"> Login/Logout </Link>
-        <Link to="/signup"> Signup/Logout </Link>
+        <Link to="/signup"> Signup </Link>
         <Link to="/posts"> Posts </Link>
 
         {jwt &&
@@ -167,6 +169,7 @@ function App() {
         />
       </Switch >
     </Router >
+    </div>
   );
 }
 

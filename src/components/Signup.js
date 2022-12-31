@@ -1,5 +1,7 @@
 import React from 'react'
 import { useHistory, Link } from "react-router-dom";
+import buttonStyles from './button.module.css';
+import styles from './Signup.module.css';
 
 const Signup = (props) => {
       const history = useHistory();
@@ -46,40 +48,27 @@ const Signup = (props) => {
             }
       }
 
-      function logOutButton() {
-            localStorage.getItem('jwt')
-            if ('jwt') {
-                  localStorage.clear('jwt');
-                  window.location.reload(false);
-                  alert('Logged out');
-            }
-      }
-
       return (
-            <form onSubmit={(e) => {
+            <form className={styles.container} onSubmit={(e) => {
                   props.setUsername('');
                   props.setPassword('');
                   e.preventDefault();
             }
             }>
-                  <div>
+                  <div className={styles.input_all}>
                         <h2>Signup</h2>
-                        <div>
-                              <input required placeholder='Username' value={props.username}
-                                    onChange={(e) => props.setUsername(e.target.value)} />
 
-                              <input required placeholder='Password' type={'password'} value={props.password}
-                                    onChange={(e) => props.setPassword(e.target.value)} />
+                        <input className={styles.input} required placeholder='Username' value={props.username}
+                              onChange={(e) => props.setUsername(e.target.value)} />
 
-                              <button onClick={signupButton}>Enter new username and password</button>
-                        </div>
-                        <div>
-                              <button onClick={logOutButton} >Log Out</button>
-                        </div>
-                        <div>
-                              <h3>If user already exists, log in:</h3>
-                              <Link to="/"><button>Log In</button></Link>
-                        </div>
+                        <input className={styles.input} required placeholder='Password' type={'password'} value={props.password}
+                              onChange={(e) => props.setPassword(e.target.value)} />
+
+                        <button className={buttonStyles.button} onClick={signupButton}>Enter new username and password</button>
+
+                        <h3>If user already exists, log in:</h3>
+                        <Link to="/"><button className={buttonStyles.button}>Log In</button></Link>
+
                   </div>
             </form>
       );

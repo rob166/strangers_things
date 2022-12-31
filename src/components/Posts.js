@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from "react-router-dom";
 import Postcard from './Postcard';
+import styles from './Posts.module.css';
+import buttonStyles from './button.module.css';
 
 const Posts = (props) => {
       const jwt = props.jwt;
@@ -35,14 +37,16 @@ const Posts = (props) => {
       }, [BASE_URL, COHORT_NAME, jwt, setPosts]);
 
       return (
-            <div>
-                  {jwt
-                  ? <Link to="/addpost"><button>Add Post</button></Link>
-                  : null}
+            <div className={styles.container}>
+                  <div className={styles.posts_top}>
+                        <h2>Posts</h2>
+                        {jwt
+                              ? <Link to="/addpost"><button className={buttonStyles.button}>Add Post</button></Link>
+                              : null}
+                  </div>
 
-                  <h1>Posts</h1>
                   {posts.map((post) =>
-                        <div key={post._id}>
+                        <div key={post._id} className={styles.posts_text}>
                               {post.isAuthor === true ?
                                     <>
                                           <Postcard
@@ -50,12 +54,12 @@ const Posts = (props) => {
                                                 post={post}
 
                                           />
-                                          <span><button
-                                                onClick={() => {
-                                                      history.push(`/posts/${post._id}`);
-                                                }
-                                                }>
-                                                View Post</button>
+                                          <span className={styles.postcard_button}>
+                                                <button className={buttonStyles.button}
+                                                      onClick={() => {
+                                                            history.push(`/posts/${post._id}`);
+                                                      }
+                                                      }>View Post</button>
                                           </span>
                                     </>
                                     :
@@ -65,11 +69,15 @@ const Posts = (props) => {
                                                 post={post}
                                           />
                                           {jwt
-                                          ?<span><button onClick={() => {
-                                                history.push(`/message/${post._id}`);
-                                          }
-                                          }>Send Message</button></span>
-                                          : null}
+
+                                                ? <span className={styles.postcard_button}>
+                                                      <button className={buttonStyles.button}
+                                                            onClick={() => {
+                                                                  history.push(`/message/${post._id}`);
+                                                            }
+                                                            }>Send Message</button></span>
+
+                                                : null}
                                     </>
                               }
                         </div>

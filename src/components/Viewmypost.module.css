@@ -1,0 +1,14 @@
+.posts_text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      max-width: 100vw;
+}
+
+.delete_button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+}

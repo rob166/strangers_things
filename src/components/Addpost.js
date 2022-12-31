@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import buttonStyles from './button.module.css';
+import styles from './Addpost.module.css';
 
 const Addposts = (props) => {
       const jwt = props.jwt;
@@ -45,38 +47,37 @@ const Addposts = (props) => {
                   console.error(error);
             }
       }
-
+      
       const handleCheckbox = () => {
             setWillDeliver(!willDeliver);
       };
 
       return (
-            <form onSubmit={(e) => {
+            <form className={styles.container} onSubmit={(e) => {
                   setTitle('');
                   setDescription('');
                   setPrice('');
                   setLocation('');
                   e.preventDefault();
             }}>
-                        <div>
-                              <input
-                                    placeholder='Enter Title'
-                                    onChange={(e) => setTitle(e.target.value)} />
-                              <input
-                                    placeholder='Enter Description'
-                                    onChange={(e) => setDescription(e.target.value)} />
-                              <input
-                                    placeholder='Enter Price'
-                                    onChange={(e) => setPrice(e.target.value)} />
-                               <input
-                                    placeholder='Enter Location'
-                                    onChange={(e) => setLocation(e.target.value)} />     
-                              <label>
-                                    <input type="checkbox" checked={willDeliver} onChange={handleCheckbox} />
-                                    Will Deliver?
-                              </label>
-                              <Link to="/posts"><button onClick={addPost}>Create</button></Link>
-                        </div>
+                  <div className={styles.input_all}>
+                        <input className={styles.input}
+                              placeholder='Enter Title'
+                              onChange={(e) => setTitle(e.target.value)} />
+                        <input className={styles.input}
+                              placeholder='Enter Description'
+                              onChange={(e) => setDescription(e.target.value)} />
+                        <input className={styles.input}
+                              placeholder='Enter Price'
+                              onChange={(e) => setPrice(e.target.value)} />
+                        <input className={styles.input}
+                              placeholder='Enter Location'
+                              onChange={(e) => setLocation(e.target.value)} />
+                        <label>
+                              <input type="checkbox" checked={willDeliver} onChange={handleCheckbox} />Will Deliver?
+                        </label>
+                        <Link to="/posts"><button className={buttonStyles.button} onClick={addPost}>Create</button></Link>
+                  </div>
             </form>
       );
 }

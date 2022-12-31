@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Postcard from './Postcard';
+import buttonStyles from './button.module.css';
+import styles from './Viewmypost.module.css';
 
 const Viewmypost = (props) => {
       const jwt = props.jwt;
@@ -59,16 +61,18 @@ const Viewmypost = (props) => {
       }
 
       return (
-            <div>
+            <div >
                   {posts.map((post) =>
                         <div key={post._id}>
                               {post._id === postId &&
-                                    <div>
+                                    <div className={styles.posts_text}>
                                           <Postcard
                                                 key={post._id}
                                                 post={post}
                                           />
-                                          <Link to="/posts"><span><button onClick={deletePost} postid={post._id}>Delete</button></span></Link>
+                                          <div className={styles.delete_button}>
+                                          <Link to="/posts"><button className={buttonStyles.button} onClick={deletePost} postid={post._id}>Delete</button></Link>
+                                          </div>
                                     </div>
                               }
                         </div>
