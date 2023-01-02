@@ -5,7 +5,7 @@
       max-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center; 
+      align-items: center;
       overflow-x: hidden;
 
 }
@@ -16,7 +16,7 @@
       margin: 15px 8px;
       border: 2px solid black;
       border-radius: 6px;
-     
+
 }
 
 .input_all {

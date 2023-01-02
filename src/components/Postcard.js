@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './Postcard.module.css';
+import styles from './PostCard.module.css';
 
-const Postcard = (props) => {
+const PostCard = (props) => {
       const post = props.post;
 
       return (
@@ -19,4 +19,4 @@ const Postcard = (props) => {
       );
 }
 
-export default Postcard;
+export default PostCard;

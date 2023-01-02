@@ -9,8 +9,6 @@ const Profile = (props) => {
       const setPosts = props.setPosts;
       const setMyUserName = props.setMyUserName;
       const myUserName = props.myUserName;
-      const messages = props.messages;
-      const setMessages = props.setMessages;
 
       useEffect(() => {
             async function fetchMeInfo() {
@@ -28,7 +26,7 @@ const Profile = (props) => {
                         const json = await response.json();
 
                         setPosts(json.data.posts);
-                        setMessages(json.data.messages);
+
                         setMyUserName(json.data.username);
                         console.log(json);
 
@@ -38,7 +36,7 @@ const Profile = (props) => {
             }
             fetchMeInfo()
 
-      }, [BASE_URL, COHORT_NAME, jwt, setMessages, setMyUserName, setPosts])
+      }, [BASE_URL, COHORT_NAME, jwt, setMyUserName, setPosts])
 
 
 
@@ -64,30 +62,6 @@ const Profile = (props) => {
                         )
                         )}
                   </div>
-
-                  <h3>My Messages</h3>
-                  <h4>Messages to me:</h4>
-                  {messages.map((message, index) =>
-                        <div key={index}>
-                              {message.fromUser.username !== myUserName &&
-                                    <p>
-                                          Message to me from {message.fromUser.username} about my post titled "{message.post.title}": {message.content}
-                                    </p>
-                              }
-                        </div>
-                  )}
-
-                  <h4>Messages from me:</h4>
-                  {messages.map((message, index) =>
-                        <div key={index}>
-                              {message.fromUser.username === myUserName &&
-                                    <p>
-                                          Message from me about the post titled "{message.post.title}": {message.content}
-                                    </p>
-                              }
-                        </div>
-                  )}
-
             </div>
       )
 }

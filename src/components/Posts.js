@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from "react-router-dom";
-import Postcard from './Postcard';
+import PostCard from './PostCard';
 import styles from './Posts.module.css';
 import buttonStyles from './button.module.css';
 
@@ -49,7 +49,7 @@ const Posts = (props) => {
                         <div key={post._id} className={styles.posts_text}>
                               {post.isAuthor === true ?
                                     <>
-                                          <Postcard
+                                          <PostCard
                                                 key={post._id}
                                                 post={post}
 
@@ -64,7 +64,7 @@ const Posts = (props) => {
                                     </>
                                     :
                                     <>
-                                          <Postcard
+                                          <PostCard
                                                 key={post._id}
                                                 post={post}
                                           />

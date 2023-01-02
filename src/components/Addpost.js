@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import buttonStyles from './button.module.css';
-import styles from './Addpost.module.css';
+import styles from './AddPost.module.css';
 
-const Addposts = (props) => {
+const AddPost = (props) => {
       const jwt = props.jwt;
       const BASE_URL = props.BASE_URL;
       const COHORT_NAME = props.COHORT_NAME;
@@ -47,7 +47,7 @@ const Addposts = (props) => {
                   console.error(error);
             }
       }
-      
+
       const handleCheckbox = () => {
             setWillDeliver(!willDeliver);
       };
@@ -82,4 +82,4 @@ const Addposts = (props) => {
       );
 }
 
-export default Addposts;
+export default AddPost;

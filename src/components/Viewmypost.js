@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import Postcard from './Postcard';
+import Postcard from './PostCard';
 import buttonStyles from './button.module.css';
-import styles from './Viewmypost.module.css';
+import styles from './ViewMyPost.module.css';
 
-const Viewmypost = (props) => {
+const ViewMyPost = (props) => {
       const jwt = props.jwt;
       const BASE_URL = props.BASE_URL;
       const COHORT_NAME = props.COHORT_NAME;
       const postId = props.postId;
       const posts = props.posts;
       const setPosts = props.setPosts;
-   
+
       useEffect(() => {
             async function fetchPosts() {
                   try {
@@ -71,7 +71,7 @@ const Viewmypost = (props) => {
                                                 post={post}
                                           />
                                           <div className={styles.delete_button}>
-                                          <Link to="/posts"><button className={buttonStyles.button} onClick={deletePost} postid={post._id}>Delete</button></Link>
+                                                <Link to="/posts"><button className={buttonStyles.button} onClick={deletePost} postid={post._id}>Delete</button></Link>
                                           </div>
                                     </div>
                               }
@@ -81,4 +81,4 @@ const Viewmypost = (props) => {
       );
 }
 
-export default Viewmypost;
+export default ViewMyPost;
